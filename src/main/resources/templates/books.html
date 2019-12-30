@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Books list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>
+
+    <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Autor</td>
+            <td>Tytuł</td>
+            <td>Dostepność</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each=" book : ${books}">
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.availability}"></td>
+
+            <td><a th:href="${'/book?id='+book.id}">Podglad</a></td>
+            <td><a th:href="${'/book/delete/'+book.id}">Usun</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <a href="/newbook">Dodaj książkę</a>
+    </div>
+    <div class="row">
+        <a href="/search">Wyszukaj książkę</a>
+    </div>
+</div>
+</body>
+</html>

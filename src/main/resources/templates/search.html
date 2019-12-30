@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Book</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>
+
+    <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <form class="form-horizontal" th:object="${search}" th:action="@{/search}" th:method="get">
+        <div class="form-group">
+            <label class="control-label">Wyszukaj według:</label><br>
+            <input type="radio" th:field="*{searchBy}" value="author" checked> Autora
+            <input type="radio" th:field="*{searchBy}" value="title"> Tytułu<br>
+            <p th:if="${#fields.hasErrors('searchBy')}" th:errors="*{searchBy}"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" th:field="*{query}"/>
+            <p th:if="${#fields.hasErrors('query')}" th:errors="*{query}"/>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-default">Szukaj</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
