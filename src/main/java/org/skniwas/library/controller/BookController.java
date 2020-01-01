@@ -2,6 +2,7 @@ package org.skniwas.library.controller;
 
 
 import org.skniwas.library.model.Book;
+import org.skniwas.library.model.repository.BookRepositoryImpl;
 import org.skniwas.library.service.BookService;
 import org.skniwas.library.utils.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -68,13 +70,9 @@ public class BookController {
     }
 
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public List<Book> search(SearchCriteria searchCriteria) {
-//        return bookService.search(searchCriteria);
-//    }
-
-    @GetMapping()
-    public List<Book> search(SearchCriteria searchCriteria) {
+    @RequestMapping(value = "/search", params = {"searchBy", "query"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Collection<Book> search(SearchCriteria searchCriteria) {
         return bookService.search(searchCriteria);
     }
 

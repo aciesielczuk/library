@@ -7,15 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Repository
-public class BookRepositoryImpl implements BookRepository{
+public class BookRepositoryImpl implements BookRepository {
 
     private Map<Integer, Book> books = new HashMap<>();
 
-    public BookRepositoryImpl() {}
+    public BookRepositoryImpl() {
+    }
 
     @Override
     public void addBook(String name, String title, boolean availability) {
@@ -48,18 +48,23 @@ public class BookRepositoryImpl implements BookRepository{
     }
 
     @Override
-    public List<Book> search(SearchCriteria searchCriteria) {
-        Predicate<Book> searchValue = null;
+    public Collection<Book> search(SearchCriteria searchCriteria) {
+        ArrayList<Book> filteredList = new ArrayList<>();
         if (searchCriteria.getSearchBy().equals("author"))
-            searchValue = b -> b.getAuthor().equalsIgnoreCase(searchCriteria.getQuery());
+            filteredList = (ArrayList<Book>) books.values()
+                    .stream()
+                    .filter(b -> b.getAuthor().equalsIgnoreCase(searchCriteria.getQuery()))
+                    .collect(Collectors.toList());
         else if (searchCriteria.getSearchBy().equals("title"))
-            searchValue = b -> b.getTitle().equalsIgnoreCase(searchCriteria.getQuery());
-        return books.values().stream().filter(Objects.requireNonNull(searchValue)).collect(Collectors.toList());
+            filteredList = (ArrayList<Book>) books.values()
+                    .stream()
+                    .filter(b -> b.getTitle().equalsIgnoreCase(searchCriteria.getQuery()))
+                    .collect(Collectors.toList());
+        return filteredList;
     }
 
-
     @PostConstruct
-    public void build () {
+    public void build() {
         addBook("Martin", "Clean Code", true);
         addBook("Walls", "Spring in action", true);
         addBook("Horstmann", "Core Java", true);

@@ -7,10 +7,7 @@ import org.skniwas.library.utils.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -18,6 +15,13 @@ public class BookService {
 
     @Autowired
     BookRepository bookRepository;
+
+    public BookService() {
+    }
+
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     public List<Book> getAllBooks() {
         return new ArrayList<>(bookRepository.getAllBooks());
@@ -35,14 +39,9 @@ public class BookService {
         bookRepository.deleteBook(id);
     }
 
-    public List<Book> search(SearchCriteria searchCriteria) {
+    public Collection<Book> search(SearchCriteria searchCriteria) {
         return bookRepository.search(searchCriteria);
     }
-
-
-
-
-
 
 
 }

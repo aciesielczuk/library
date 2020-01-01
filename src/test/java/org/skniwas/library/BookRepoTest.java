@@ -15,25 +15,25 @@ public class BookRepoTest {
 
     BookRepositoryImpl bookRepository = new BookRepositoryImpl();
 
+    @Test
+    public void searchTestByAuthor() {
+        List<Book> expectedList = new ArrayList<>();
+        bookRepository.build();
+        expectedList.add(new Book("Martin", "Clean Code", true));
+        expectedList.add(new Book("Martin", "Clean Architecture", true));
 
-        @Test
-        public void searchTestByAuthor() {
-            List<Book> expectedList = new ArrayList<>();
-            bookRepository.build();
-            expectedList.add(new Book("Martin", "Clean Code", true));
-            expectedList.add(new Book("Martin", "Clean Architecture", true));
+        Assertions.assertEquals(expectedList.toString(), bookRepository.search(new SearchCriteria("Martin", "author")).toString());
+    }
 
-            Assertions.assertEquals(expectedList.toString(), bookRepository.search(new SearchCriteria("Martin", "author")).toString());
-        }
 
-        @Test
-        public void searchTestByTitle() {
-            List<Book> expectedList = new ArrayList<>();
-            bookRepository.build();
-            expectedList.add(new Book("Horstmann", "Core Java", true));
+    @Test
+    public void searchTestByTitle() {
+        List<Book> expectedList = new ArrayList<>();
+        bookRepository.build();
+        expectedList.add(new Book("Horstmann", "Core Java", true));
 
-            Assertions.assertEquals(expectedList.toString(),bookRepository.search(new SearchCriteria("Core Java", "title")).toString());
-        }
+        Assertions.assertEquals(expectedList.toString(), bookRepository.search(new SearchCriteria("Core Java", "title")).toString());
+    }
 
 
 }
