@@ -3,6 +3,7 @@ package org.skniwas.library.model.repository;
 import org.skniwas.library.model.Book;
 import org.skniwas.library.utils.IdGenerator;
 import org.skniwas.library.utils.SearchCriteria;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
+@Profile("dev")
 public class BookRepositoryImpl implements BookRepository {
 
     private Map<Integer, Book> books = new HashMap<>();
@@ -26,7 +28,7 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public void addBook(Book book) {
+     public void addBook(Book book) {
         int id = IdGenerator.getUniqueId();
         book.setId(id);
         books.put(id, book);

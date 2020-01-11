@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.skniwas.library.model.Book;
 import org.skniwas.library.model.repository.BookRepositoryImpl;
-import org.skniwas.library.service.BookService;
 import org.skniwas.library.utils.SearchCriteria;
 
 import java.util.ArrayList;

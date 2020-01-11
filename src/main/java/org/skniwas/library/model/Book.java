@@ -1,10 +1,27 @@
 package org.skniwas.library.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+
+@Entity
+@Table(name = "BOOK")
 public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotNull
+    @Size(min = 2, max = 100)
     private String author;
+
+    @NotNull
+    @Size(min = 2, max = 100)
     private String title;
+
+    @NotNull
     private boolean availability;
 
     public Book() {
