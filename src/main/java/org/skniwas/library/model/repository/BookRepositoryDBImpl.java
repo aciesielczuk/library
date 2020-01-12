@@ -7,13 +7,11 @@ import org.skniwas.library.utils.SearchCriteria;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Repository
 @Profile("prod")
@@ -76,21 +74,27 @@ public class BookRepositoryDBImpl implements BookRepository {
 
     @Override
     public Collection<Book> search(SearchCriteria searchCriteria) {
-        var transaction = session.beginTransaction();
         List<Book> filteredList = new ArrayList<>();
-        List<Book> books = session.createQuery("from Book", Book.class).getResultList();
-        transaction.commit();
         if (searchCriteria.getSearchBy().equals("author")) {
-            filteredList = books
-                    .stream()
-                    .filter(b -> b.getAuthor().equalsIgnoreCase(searchCriteria.getQuery()))
-                    .collect(Collectors.toList());
+            filteredList = filterByAuthor(searchCriteria);
         } else if (searchCriteria.getSearchBy().equals("title")) {
-            filteredList = books
-                    .stream()
-                    .filter(b -> b.getTitle().equalsIgnoreCase(searchCriteria.getQuery()))
-                    .collect(Collectors.toList());
+            filteredList = filterByTitle(searchCriteria);
         }
         return filteredList;
     }
+
+    private List<Book> filterByAuthor(SearchCriteria searchCriteria) {
+        List<Book> books = (List<Book>) getAllBooks();
+        return books.stream()
+                .filter(b -> b.getAuthor().equalsIgnoreCase(searchCriteria.getQuery()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Book> filterByTitle(SearchCriteria searchCriteria) {
+        List<Book> books = (List<Book>) getAllBooks();
+        return books.stream()
+                .filter(b -> b.getTitle().equalsIgnoreCase(searchCriteria.getQuery()))
+                .collect(Collectors.toList());
+    }
+
 }
